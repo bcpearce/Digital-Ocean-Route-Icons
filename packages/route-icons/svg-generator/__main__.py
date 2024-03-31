@@ -11,7 +11,11 @@ def main(event):
     stroke_color.set_luminance(stroke_color.get_luminance() * 1.1)
 
     text = event.get("text", "")
-    text_color = event.get("text_color", "white")
+    text_color = Color(event.get("text_color", "white"))
+    text_stroke_color = Color(event.get("text_color", "white"))
+    text_stroke_color.set_saturation(stroke_color.get_saturation() * 1.2)
+    text_stroke_color.set_luminance(text_stroke_color.get_luminance() * 0.8)
+
     canvas = svg.SVG(
         width=int(event.get("width", 75)),
         height=int(event.get("height", 75)),
@@ -27,7 +31,7 @@ def main(event):
                 rx=5,
             ),
             svg.Style(
-                text=f".vignelli{{font: bold 26px Helvetica; fill: {text_color}}}"  # noqa E501
+                text=f".vignelli{{font: bold 31px Helvetica; fill: {text_color}}}"  # noqa E501
             ),
             svg.Text(
                 x="50%",
@@ -37,6 +41,8 @@ def main(event):
                 class_=["vignelli"],
                 text=text,
                 color=text_color,
+                stroke=text_stroke_color,
+                stroke_width=1,
             ),
         ],
     )
